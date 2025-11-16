@@ -20,11 +20,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +36,10 @@ import androidx.compose.ui.unit.sp
 import com.example.geartracker.ui.theme.GearTrackerTheme
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 val example = StravaActivity(
     id = 12345678987654321,
@@ -119,6 +126,32 @@ fun StravaActivityCard(stravaActivity: StravaActivity, modifier: Modifier = Modi
                     fontWeight = FontWeight.Light,
                     fontSize = 12.sp
                 )
+                Spacer(modifier = Modifier.weight(1f))
+                Row(modifier = Modifier.fillMaxWidth()) {
+
+                    var odt = OffsetDateTime.parse(stravaActivity.start_date);
+                    var dtf = DateTimeFormatter.ofPattern("MMM dd, uuuu 'at' h:mm a", Locale.ENGLISH);
+
+                    Text(
+                        text = dtf.format(odt),
+                        fontWeight = FontWeight.Light,
+                        fontSize = 12.sp
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Icon(painter = painterResource(id = R.drawable.play_arrow_24px),
+                        contentDescription = null,
+                        Modifier
+                            .size(
+                                with(LocalDensity.current) {
+                                    24.sp.toDp()
+                                }
+                            )
+                            .align(Alignment.CenterVertically)
+                    )
+
+                }
             }
 
 
